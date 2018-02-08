@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body onload="myFunction()">
+
+  <h1>Cross 3</h1>
+  <span id= '0'>.</span><span id= '1'>.</span><span id= '2'>.</span><br>
+  <span id= '3'>.</span><span id= '4'>.</span><span id= '5'>.</span><br>
+  <span id= '6'>.</span><span id= '7'>.</span><span id= '8'>.</span><br>
+
+ </body>
+ <script>
+ 			var one = document.getElementById("0").innerText;
+			var two = document.getElementById("1").innerText;
+			var three = document.getElementById("2").innerText;
+			var four = document.getElementById("3").innerText;
+			var five = document.getElementById("4").innerText;
+			var six = document.getElementById("5").innerText;
+			var seven = document.getElementById("6").innerText;
+			var eight = document.getElementById("7").innerText;
+			var nine = document.getElementById("8").innerText;
+
+			var ticTacToeArray = [
+				[one, two, three],
+				[four, five, six],
+				[seven, eight, nine]
+				];
+
+ 			function loadArray(){
+ 				one = document.getElementById("0").innerText;
+				two = document.getElementById("1").innerText;
+				three = document.getElementById("2").innerText;
+				four = document.getElementById("3").innerText;
+				five = document.getElementById("4").innerText;
+				six = document.getElementById("5").innerText;
+				seven = document.getElementById("6").innerText;
+				eight = document.getElementById("7").innerText;
+				nine = document.getElementById("8").innerText;
+
+				ticTacToeArray = [
+				[one, two, three],
+				[four, five, six],
+				[seven, eight, nine]
+				];
+ 			}
+			
+
+	function myFunction(){
+		var turn = 0;
+
+		for (i=0;i<9;++i)
+		{	
+			document.getElementById(i).addEventListener("click",function(){
+				this.innerHTML = turn % 2 == 0 ? 'O' : 'X';
+				loadArray();
+				//console.log(ticTacToeArray)
+				checkingRowNColumnWinner();
+				++turn;
+			});
+
+		}
+
+	};
+
+	Array.prototype.allValuesSame = function() {
+
+    for(var i = 1; i < this.length; i++)
+    {
+        if(this[i] !== this[0])
+            return false;
+    }
+
+    return true;
+}
+
+	function checkingRowNColumnWinner() {
+		var array = [null,null,null];
+
+		if ((ticTacToeArray[0][0] != ".") && (ticTacToeArray[0][0] == ticTacToeArray[1][1]) && (ticTacToeArray[1][1] == ticTacToeArray[2][2])) {
+			var winningMessage = "Winner is " + ticTacToeArray[0][0];
+				console.log(winningMessage);
+		}
+
+		if ((ticTacToeArray[0][2] != ".") && (ticTacToeArray[0][2] == ticTacToeArray[1][1]) && (ticTacToeArray[1][1] == ticTacToeArray[2][0])) {
+			var winningMessage = "Winner is " + ticTacToeArray[0][2];
+				console.log(winningMessage);
+		}
+
+		for (i=0;i<3;++i)
+		{
+			array = [null,null,null]
+			for(t=0;t<3;++t)
+			{
+				array[t] = ticTacToeArray[i][t];
+				console.log(array)
+				if (array.allValuesSame() && array[1] != "."){
+				var winningMessage = "Winner is " + array[1];
+				console.log(winningMessage);
+			}
+			}
+			
+		}
+
+		for (i=0;i<3;++i)
+		{
+			array = [null,null,null]
+			for(t=0;t<3;++t)
+			{
+				
+				array[t] = ticTacToeArray[t][i];
+				console.log(array)
+				if (array.allValuesSame() && array[1] != "."){
+				var winningMessage = "Winner is " + array[1];
+				console.log(winningMessage);
+			}
+			}
+			
+		}
+
+	};
+
+</script>
+
+</html>
