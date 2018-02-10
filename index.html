@@ -63,16 +63,6 @@
 
 	};
 
-	Array.prototype.allValuesSame = function() {
-
-    for(var i = 1; i < this.length; i++)
-    {
-        if(this[i] !== this[0])
-            return false;
-    }
-
-    return true;
-}
 
 	function checkingRowNColumnWinner() {
 		var array = [null,null,null];
@@ -94,7 +84,7 @@
 			{
 				array[t] = ticTacToeArray[i][t];
 				console.log(array)
-				if (array.allValuesSame() && array[1] != "."){
+				if ((array[0] == array[1]) && (array[1] == array[2]) && (array[1] != ".")){
 				var winningMessage = "Winner is " + array[1];
 				console.log(winningMessage);
 			}
@@ -110,7 +100,7 @@
 				
 				array[t] = ticTacToeArray[t][i];
 				console.log(array)
-				if (array.allValuesSame() && array[1] != "."){
+				if ((array[0] == array[1]) && (array[1] == array[2]) && (array[1] != ".")) {
 				var winningMessage = "Winner is " + array[1];
 				console.log(winningMessage);
 			}
