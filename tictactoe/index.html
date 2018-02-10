@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<!-- Use monospace font to make all character the same width and setting big font size-->
+<body onload="loadGame()" style='font-family: "Courier New", Courier, monospace; font-size: 4em'>
+
+  <h1>Tic Tac Toe</h1>
+  <div>State <span id='state'></span></div>
+  <span id= '0'>.</span><span id= '1'>.</span><span id= '2'>.</span><br>
+  <span id= '3'>.</span><span id= '4'>.</span><span id= '5'>.</span><br>
+  <span id= '6'>.</span><span id= '7'>.</span><span id= '8'>.</span><br>
+  <div><button onClick='loadGame()'>Reset</button></div>
+
+ </body>
+ <script>
+  var grid;
+  var turn;
+  
+  function gameInit(){
+    turn = 0;
+    document.getElementById('state').innerHTML = 'Playing';
+    grid = [[],[],[]];
+    for (var i=0;i<9;++i){  
+      // init the grid array
+      grid[Math.floor(i/3)][i%3] = '.';
+
+      // init the frontend
+      document.getElementById(i).innerHTML = '.';
+    }
+  }
+
+  // onclick Move function
+  function moveFunc() {
+    // no overwrite previous move
+    if ( this.innerHTML != '.' ) return;
+    
+    // Update the grid array
+    id = parseInt(this.id);
+    grid[Math.floor(id/3)][id%3] = ( turn % 2 == 0 ? 'O' : 'X' );
+
+    // Update frontend display
+    this.innerHTML = ( turn % 2 == 0 ? 'O' : 'X' );
+
+    // Update game state
+    state = checkGameState();
+    switch (state) {
+      case '.': document.getElementById('state').innerHTML = 'Playing';break;
+      case 'X': document.getElementById('state').innerHTML = 'X wins!!'; break;
+      case 'O': document.getElementById('state').innerHTML = 'O wins!!'; break;
+      case 'D': document.getElementById('state').innerHTML = 'Draw'; break;
+    }
+    ++turn;
+  }
+
+  function loadGame(){
+    // init the game
+    gameInit();
+    for (i=0;i<9;++i) {  
+      document.getElementById(i).innerHTML = '.';
+      document.getElementById(i).addEventListener("click",moveFunc);
+    }
+  };
+
+  // function checking the game state
+  // @return winner symbol
+  // 'D' means draw
+  // '.' means still playing
+  function checkGameState() {
+    // checking row and column
+    for (var i=0;i<3;++i) {
+      // row checking
+      if ( grid[i][0] != '.' && grid[i][0] == grid[i][1] && grid[i][0] == grid[i][2] ){
+        return grid[i][0];
+      }
+
+      // column checking
+      if ( grid[0][i] != '.' && grid[0][i] == grid[1][i] && grid[0][i] == grid[2][i] ){
+        return grid[0][i];
+      }
+    }
+    // check diagonal
+    if ( grid[0][0] != '.' && grid[0][0] == grid[1][1] && grid[0][0] == grid[2][2] )
+      return grid[0][0];
+    if ( grid[2][0] != '.' && grid[2][0] == grid[1][1] && grid[2][0] == grid[0][2] )
+      return grid[2][0];
+    
+    // check still empty grid
+    for ( var i = 0; i<9;++i ){
+      if ( grid[Math.floor(i/3)][i%3] == '.' ) return '.';
+    }
+    
+    // Draw
+    return 'D';
+  };
+
+</script>
+
+</html>
